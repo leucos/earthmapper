@@ -1,0 +1,20 @@
+
+    <Folder>
+      <open>0</open>
+      <name>Cache Indexes</name>
+      
+      <Style>
+        <ListStyle>
+          <listItemType>radioFolder</listItemType>
+        </ListStyle>
+      </Style>
+
+
+    </Folder>
+
+    <?r Geoportail::Territory.each_key do |t| ?>
+      #{ render_partial :_territory_folder, :territory => t, :key => @key }
+    <?r end ?>
+    
+
+

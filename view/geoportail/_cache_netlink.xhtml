@@ -1,0 +1,12 @@
+      <NetworkLink>
+        <name>#{@layer[:description]} Tile Cache Index</name>
+        <description>
+          <![CDATA[
+          <strong>Tile cache index for #{@layer[:name]} layer</strong>
+          ]]>
+        </description>
+        <Link>
+          <href>#{EarthMapper.options.myurl}/#{Geoportail::Controller.r(:tile_index)}?layer=#{@layer[:name]}&amp;key=#{@key}</href>
+          <viewRefreshMode>onRequest</viewRefreshMode>
+        </Link>
+      </NetworkLink>

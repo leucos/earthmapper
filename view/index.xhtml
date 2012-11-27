@@ -1,0 +1,8 @@
+<p>
+The following backends are configured :
+<ul>
+<?r @backends.each do |b| ?>
+    <li>#{b[:name]} <a href=/#{b[:name]}/>HTML</a> <a href=/#{b[:name]}/index.kml>KML</a> <a href=/#{b[:name]}/configure/>Configuration</a></li>
+<?r end ?>
+</ul>
+</p>
