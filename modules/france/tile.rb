@@ -1,14 +1,14 @@
 require 'rgeo'
 require 'open-uri'
 
-module Geoportail
+module France
   class Tile < EarthMapper::Tile
 
     attr_reader :row, :col, :layer, :zoom, :key, :raw
-    @@set = :geoportail
+    @@backend = :france
 
-    def tileset
-      @@set.to_s
+    def backend
+      @@backend.to_s
     end
 
     def initialize(key, layer, row, col, zoom)
@@ -21,14 +21,17 @@ module Geoportail
       case CACHE.cached?(self)
       when false
         # if not retrieve
-        puts "fetching #{remote_url}"
-        open(remote_url,
-          "User-Agent" => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.14 Safari/537.17',
-          "Referer"=> 'localhost') do |f|
-          @raw = f.read
-        end
-        CACHE.store(self)
+        # puts "fetching #{remote_url}"
+        # open(remote_url,
+        #   "User-Agent" => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.14 Safari/537.17',
+        #   "Referer"=> 'localhost') do |f|
+        #   @raw = f.read
+        # end
+        # CACHE.store(self)
+        Ramaze::Log.info "+++ CACHE MISS"
+        CACHE.spool(self, remote_url)
       else
+        Ramaze::Log.info "+++ CACHE HIT"
         open(CACHE.path(self)) do |f|
           @raw = f.read
         end
@@ -53,12 +56,12 @@ module Geoportail
 
     def north_west
       return @northwest if @northwest
-      @northwest = Geoportail::tile2coords(@row,@col,@zoom)
+      @northwest = France::tile2coords(@row,@col,@zoom)
     end
 
     def south_east
       return @southeast if @southeast
-      @southeast = Geoportail::tile2coords(@row+1,@col+1,@zoom)
+      @southeast = France::tile2coords(@row+1,@col+1,@zoom)
     end
 
     def url
@@ -68,7 +71,7 @@ module Geoportail
     private 
 
     def remote_url
-      "http://gpp3-wxs.ign.fr/#{self.key}/geoportail/wmts?LAYER=GEOGRAPHICALGRIDSYSTEMS.MAPS&EXCEPTIONS=text/xml&FORMAT=image/jpeg&SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX=#{self.zoom}&TILEROW=#{self.row}&TILECOL=#{self.col}"
+      "http://gpp3-wxs.ign.fr/#{self.key}/geoportail/wmts?LAYER=#{self.layer}&EXCEPTIONS=text/xml&FORMAT=image/jpeg&SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX=#{self.zoom}&TILEROW=#{self.row}&TILECOL=#{self.col}"
     end
   end
 end

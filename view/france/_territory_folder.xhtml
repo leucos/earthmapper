@@ -1,0 +1,16 @@
+    <Folder>
+      <open>0</open>
+      <name>#{France::Territory[@territory][:name]}</name>
+      <Style>
+        <ListStyle>
+          <listItemType>radioFolder</listItemType>
+        </ListStyle>
+      </Style>
+
+      <?r France::Layers.each_key do |l| ?>
+        <?r Ramaze::Log.info "_terr : %s" % l ?>
+
+        #{ render_partial :_overlay_netlink, :layer => France::Layers[l], :territory => @territory, :key => @key }
+      <?r end ?>
+      
+    </Folder>

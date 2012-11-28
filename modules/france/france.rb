@@ -2,7 +2,7 @@
 
 require 'rgeo'
 
-module Geoportail
+module France
 
   Territory = { 
     # "ANF" => { :name => "Antilles Françaises",      :kx => 6160807.2519099, :ky => 6378137.0000000, :north => , :south =>, :west => , :east => },
@@ -14,14 +14,14 @@ module Geoportail
     # "MYT" => { :name => "Mayotte",                  :kx => 6238759.4037015, :ky => 6378137.0000000, :north => , :south =>, :west => , :east => },
     # "NCL" => { :name => "Nouvelle Calédonie",       :kx => 5913705.6486150, :ky => 6378137.0000000, :north => , :south =>, :west => , :east => },
     # "PYF" => { :name => "Polynésie Française",      :kx => 6160807.2519099, :ky => 6378137.0000000, :north => , :south =>, :west => , :east => },
-    # "REU" => { :name => "Réunion",                  :kx => 5954503.8607176, :ky => 6378137.0000000, :north => , :south =>, :west => , :east => },
+    "REU" => { :name => "Réunion",                  :kx => 5954503.8607176, :ky => 6378137.0000000, :north => -20.85, :south => -21.40, :west => 55.20, :east => 55.90},
     # "SPM" => { :name => "Saint Pierre et Miquelon", :kx => 4349878.9742539, :ky => 6378137.0000000, :north => , :south =>, :west => , :east => },
     # "WLF" => { :name => "Wallis et Futuna",         :kx => 6188679.0727028, :ky => 6378137.0000000, :north => , :south =>, :west => , :east => },
   }
 
   Layers = { 
     "maps"      => { :name => "GEOGRAPHICALGRIDSYSTEMS.MAPS", :description => "Maps" },
-    #"aerial"    => { :name => "ORTHOIMAGERY.ORTHOPHOTOS", :description => "Aerial photo" },
+    "aerial"    => { :name => "ORTHOIMAGERY.ORTHOPHOTOS", :description => "Aerial photo" },
     #"elevation" => { :name => "ELEVATION.SLOPS", :description => "Elevation" }
   }
 
@@ -40,7 +40,9 @@ module Geoportail
 
   Parameters = { :x0 => -20037508, :y0 => 20037508 }
 
-  def Geoportail.coords2tile(lat, lon, z)
+  MaxTiles = 7
+
+  def France.coords2tile(lat, lon, z)
     destination = RGeo::Cartesian.factory(:proj4 => '+init=epsg:3857')
     spoint = SourceSystem.point(lon, lat)
     dpoint = RGeo::Feature.cast(spoint, :factory => destination, :project => true)
@@ -48,17 +50,17 @@ module Geoportail
     x = dpoint.x-Parameters[:x0]
     y = Parameters[:y0]-dpoint.y
 
-    f = 256 * Geoportail::Zoom[z]
+    f = 256 * France::Zoom[z]
     row = (y / f).to_i
     col = (x / f).to_i
 
     [row, col]
   end
 
-  def Geoportail.tile2coords(row, col, z)
+  def France.tile2coords(row, col, z)
     destination = RGeo::Cartesian.factory(:proj4 => '+init=epsg:3857')
     
-    f = 256 * Geoportail::Zoom[z]
+    f = 256 * France::Zoom[z]
    
     y = row * f
     x = col * f
@@ -72,8 +74,8 @@ module Geoportail
     [spoint.x, spoint.y]
   end
 
-  def Geoportail.find_zoom(north, west, south, east)
-    sqrmaxtiles = 4
+  def France.find_zoom(north, west, south, east)
+    sqrmaxtiles = France::MaxTiles
     pixpertile = 256
 
     factory = RGeo::Geographic.spherical_factory(:srid => 4326)

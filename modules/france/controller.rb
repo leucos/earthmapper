@@ -2,9 +2,10 @@
 
 require 'rgeo'
 
-module Geoportail    
+module France    
   class Controller < Ramaze::Controller
-    map '/geoportail'
+    map '/france'
+    helper :xhtml
 
     layout do |path|
       if path === 'index'
@@ -14,7 +15,7 @@ module Geoportail
       end
     end
 
-    before_all do
+    before(:kml, :overlay, :tile) do
       response['Content-Type'] = 'application/vnd.google-earth.kml+xml' 
     end
 
@@ -25,7 +26,7 @@ module Geoportail
 
     def index
       # Returns mail KML with territories/layer list
-      @title = 'Geoportail area'
+      @title = 'France area'
       # TODO: create a KML view
       Ramaze::Log.info "In provide index"
 
@@ -34,7 +35,7 @@ module Geoportail
 
     def kml
       # Returns main KML with territories/layer list
-      @title = 'Geoportail area'
+      @title = 'France area'
       @key = request.params["key"]
     end
 
@@ -46,29 +47,25 @@ module Geoportail
       @key = request.params["key"]
 
       # TODO: complain unless key
-
       args = request.subset(:BBOX, :territory, :layer, :key)
+
       # We need to compute best zoom level here and return tile list
       # BBOX is WSEN
       w,s,e,n = args["BBOX"].split(/,/).map {|x| x.to_f }
 
-      # TODO : find best zoom level
-      zoom = Geoportail::find_zoom(n,w,s,e)
+      # find best zoom level
+      zoom = France::find_zoom(n,w,s,e)
       Ramaze::Log.info "computed best zoom : #{zoom}"
 
-      # TODO : find row, col for top left tile
-      # TODO : find row col for bottom right tile
-      nw = Geoportail::coords2tile(n,w,zoom)
-      se = Geoportail::coords2tile(s,e,zoom)
+      # find row, col for top left tile
+      # find row col for bottom right tile
+      nw = France::coords2tile(n,w,zoom)
+      se = France::coords2tile(s,e,zoom)
 
-      # TODO : loop and add all tiles
-      Ramaze::Log.info "%s %s %s %s => (%s,%s) -> (%s,%s)" % [ w,s,e,n,nw[0],nw[1],se[0],se[1] ]
-
-
+      # loop and add all tiles
       nw[0].upto(se[0]) do |r|
         nw[1].upto(se[1]) do |c|
-          Ramaze::Log.info "fetching %s %s %s %s %s" % [args['key'], args['layer'], r, c, zoom]
-          @tileset << Geoportail::Tile.new(args['key'], args['layer'], r, c, zoom)
+          @tileset << France::Tile.new(args['key'], args['layer'], r, c, zoom)
         end
       end
     end
