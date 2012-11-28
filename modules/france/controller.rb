@@ -14,6 +14,8 @@ module France
         :kml
       end
     end
+    
+#    Ramaze.options.view.push('view/')
 
     before(:kml, :overlay, :tile) do
       response['Content-Type'] = 'application/vnd.google-earth.kml+xml' 
