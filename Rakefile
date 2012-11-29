@@ -5,6 +5,14 @@ module EarthMapper
   )
 end
 
+begin
+  require 'bundler'
+rescue
+  sh 'gem install bundler'
+ensure
+  sh 'bundle'
+end
+
 task :default => "server:start"
 
 namespace :server do
@@ -12,11 +20,12 @@ namespace :server do
   multitask :start => [ 'server:web', 'server:grabber' ]
 
   task :web do
+    #sh "bundle exec ruby bin/earthmapper.rb"
     sh "bundle exec ramaze start -s thin"
   end
 
   task :grabber do
-    sh "bundle exec ruby bin/netgrabber.rb"
+    sh "bundle exec ruby bin/ggrabber.rb"
   end
 end
 
@@ -29,6 +38,8 @@ namespace :build do
       "#{EarthMapper::Gemspec.name}-" \
         "#{EarthMapper::Gemspec.version.version}.gem"
     )
+
+    Dir.exist?(File.join(gem_path, 'pkg')) or mkdir File.join(gem_path, 'pkg')
 
     pkg_path = File.join(
       gem_path,

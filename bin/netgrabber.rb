@@ -25,13 +25,11 @@ class EchoServer
 
   def handle_connection(socket)
     _, port, host = socket.peeraddr
-    print "^"
     loop do 
       data = socket.readpartial(4096).chomp!
       POOL.grab_tile!(*data.split('|'))
     end
   rescue EOFError
-    print "v"
     socket.close
   end
 end

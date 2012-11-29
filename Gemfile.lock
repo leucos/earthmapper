@@ -1,6 +1,7 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    addressable (2.3.2)
     celluloid (0.12.3)
       facter (>= 1.6.12)
       timers (>= 1.0.0)
@@ -8,6 +9,11 @@ GEM
       celluloid (~> 0.12.0)
       nio4r (>= 0.4.0)
     daemons (1.1.8)
+    em-http-request (0.3.0)
+      addressable (>= 2.0.0)
+      escape_utils
+      eventmachine (>= 0.12.9)
+    escape_utils (0.2.4)
     eventmachine (0.12.10)
     facter (1.6.14)
     innate (2012.03)
@@ -28,6 +34,7 @@ PLATFORMS
 
 DEPENDENCIES
   celluloid-io
+  em-http-request
   ramaze
   rgeo
   thin

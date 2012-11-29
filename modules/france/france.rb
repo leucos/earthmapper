@@ -1,6 +1,6 @@
 # coding: utf-8
 
-require 'rgeo'
+# require 'rgeo'
 
 module France
 
