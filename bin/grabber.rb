@@ -7,7 +7,7 @@ class TileGrabber < EM::Protocols::LineAndTextProtocol
   def receive_data(data)
     url,filename = data.chomp.split('|')
 
-    print ">" if VERBOSE
+    puts "> #{url}" if VERBOSE
     http = EventMachine::HttpRequest.new(url).get(:head => {
     "Accept-Encoding" => "gzip, compressed",
     "User-Agent" => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.14 Safari/537.17',
