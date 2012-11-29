@@ -7,18 +7,7 @@
       <a href="#{EarthMapper.options.myurl}/#{France::Controller.r(:index)}">Configuration</a>
         ]]>
       </description>
-      <Folder>
-        <open>0</open>
-        <name>Cache Indexes</name>
-        
-        <Style>
-          <ListStyle>
-            <listItemType>radioFolder</listItemType>
-          </ListStyle>
-        </Style>
-
-      </Folder>
-
+      
       <?r France::Territory.each_key do |t| ?>
         #{ render_partial :_territory_folder, :territory => t, :key => @key }
       <?r end ?>

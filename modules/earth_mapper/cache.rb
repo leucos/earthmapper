@@ -3,15 +3,7 @@
 module EarthMapper
   class Cache
     def initialize
-      [EarthMapper.options.cache_dir, EarthMapper.options.data_dir].each do |dir|
-        begin
-          Ramaze::Log.info "Creating directory %s" % dir
-          FileUtils.mkdir_p dir, :mode => 0755
-        rescue
-          Ramaze::Log.error "Unable to create directory %s" % dir
-          exit
-        end
-      end
+      
 
 #       @database = SQLite3::Database.new( "#{EarthMapper.options.data_dir}/earthmapper.db" )
 #       @database.busy_timeout 100000
