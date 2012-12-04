@@ -1,7 +1,7 @@
 require 'gserver'
 require 'open-uri'
 
-POOL_SIZE = 50
+POOL_SIZE = 500
 PORT = 1234
 
 class TileGrabber < GServer
@@ -10,9 +10,10 @@ class TileGrabber < GServer
   end
 
   def serve(io)
-#    url, filename = io.readpartial(4096).chomp.split('|')
+    print ">"
     url, filename = io.gets.chomp.split('|')
     io.close
+    print "<"
 
     raw = nil
     open(url,
@@ -20,12 +21,13 @@ class TileGrabber < GServer
          "Referer"=> 'localhost') do |f|
       raw = f.read
     end
-
     print "*"
 
     File.open(filename, 'w') do |f|
       f.write(raw)
     end
+
+    print "+"
   end
 end
 
@@ -36,6 +38,6 @@ server = TileGrabber.new
 trap("INT"){ server.shutdown }
 trap("TERM"){ server.stop }
 
-server.audit = true
-server.start
-#server.join
+server.audit = false
+server.start(-1)
+server.join
