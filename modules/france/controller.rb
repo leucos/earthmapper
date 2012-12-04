@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-#require 'rgeo'
-
 module France    
   class Controller < Ramaze::Controller
     map '/france'
@@ -14,8 +12,6 @@ module France
         :kml
       end
     end
-    
-#    Ramaze.options.view.push('view/')
 
     before(:kml, :overlay, :tile) do
       response['Content-Type'] = 'application/vnd.google-earth.kml+xml' 

@@ -12,7 +12,7 @@ Ramaze.options.roots = [__DIR__]
 require __DIR__('config/settings.rb')
 
 # Initialize controllers and modules
-require __DIR__('controller/init')
+#require __DIR__('controller/init')
 require __DIR__('modules/init')
 
 CACHE = EarthMapper::Cache.new
