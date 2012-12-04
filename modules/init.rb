@@ -6,7 +6,7 @@ EarthMapper.options.backends.each do |b|
 
   viewpath = File.join("modules", b[:name], 'view')
   Ramaze::Log.info("Pushing view path #{viewpath}")
+  
   Ramaze.options.views.push(viewpath)
   Ramaze::Log.info(Ramaze.options.views.inspect)
-
 end

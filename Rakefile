@@ -25,7 +25,7 @@ namespace :server do
   end
 
   task :grabber do
-    sh "bundle exec ruby bin/ggrabber.rb"
+    sh "bundle exec ruby bin/grabber.rb"
   end
 end
 

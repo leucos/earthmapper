@@ -36,19 +36,21 @@ module France
             152.8740565704, 76.4370282852, 38.2185141426, 19.1092570713, 9.5546285356, 4.7773142678, 
             2.3886571339, 1.1943285670, 0.5971642835, 0.2985821417, 0.1492910709, 0.0746455354 ]
 
-  SourceSystem = RGeo::Cartesian.factory(:proj4 => '+init=epsg:4326')
+  #SourceSystem = RGeo::Cartesian.factory(:proj4 => '+init=epsg:4326')
 
   Parameters = { :x0 => -20037508, :y0 => 20037508 }
 
-  MaxTiles = 7
+  MaxTiles = 9
 
   def France.coords2tile(lat, lon, z)
-    destination = RGeo::Cartesian.factory(:proj4 => '+init=epsg:3857')
-    spoint = SourceSystem.point(lon, lat)
-    dpoint = RGeo::Feature.cast(spoint, :factory => destination, :project => true)
+    lon = lon * Math::PI / 180
+    lat = lat * Math::PI / 180
 
-    x = dpoint.x-Parameters[:x0]
-    y = Parameters[:y0]-dpoint.y
+    x = EarthMapper::Radius * lon
+    y = EarthMapper::Radius * Math.log(Math.tan(lat/2 + Math::PI/4))
+    
+    x = x-Parameters[:x0]
+    y = Parameters[:y0]-y
 
     f = 256 * France::Zoom[z]
     row = (y / f).to_i
@@ -57,9 +59,7 @@ module France
     [row, col]
   end
 
-  def France.tile2coords(row, col, z)
-    destination = RGeo::Cartesian.factory(:proj4 => '+init=epsg:3857')
-    
+  def France.tile2coords(row, col, z)    
     f = 256 * France::Zoom[z]
    
     y = row * f
@@ -68,21 +68,31 @@ module France
     x = x + Parameters[:x0]
     y = Parameters[:y0] - y
 
-    dpoint = destination.point(x, y)
-    spoint = RGeo::Feature.cast(dpoint, :factory => SourceSystem, :project => true)
+    lon = x/EarthMapper::Radius
+    lon = lon*180/Math::PI
+    lat = 2 * Math.atan(Math.exp(y/EarthMapper::Radius)) - Math::PI/2
+    lat = lat*180/Math::PI
 
-    [spoint.x, spoint.y]
+    [lon, lat]
+  end
+
+  def France.check(lat, lon, z)
+    res = Array.new
+    res = coords2tile(lat,lon,z)
+
+    puts "t2c(%s,%s,%s) => %s %s " % [lat, lon, z, *res]
+    puts "c2t(%s,%s,%s) => %s %s " % [res[0], res[1], z, *tile2coords(*res, z)]
   end
 
   def France.find_zoom(north, west, south, east)
     sqrmaxtiles = France::MaxTiles
     pixpertile = 256
 
-    factory = RGeo::Geographic.spherical_factory(:srid => 4326)
+    #factory = RGeo::Geographic.spherical_factory(:srid => 4326)
 
     # Find horizontal/vertical distances
-    hdist = factory.point(west,north).distance(factory.point(east, north))
-    vdist = factory.point(west,north).distance(factory.point(west, south))
+    hdist = EarthMapper.distance(north,west,north,east)
+    vdist = EarthMapper.distance(north,west,south,west)
 
     # Find biggest distance
     dist = (hdist > vdist ? hdist : vdist)

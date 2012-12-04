@@ -1,5 +1,5 @@
-require 'rgeo'
-require 'open-uri'
+#require 'rgeo'
+#require 'open-uri'
 
 module France
   class Tile < EarthMapper::Tile
