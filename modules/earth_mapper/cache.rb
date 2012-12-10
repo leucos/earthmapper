@@ -31,7 +31,13 @@ module EarthMapper
     end
 
     def spool(tile, url)
-      #@database.execute("INSERT INTO jobs VALUES (null, \"%s\", \"%s\");" % [ url, path(tile) ])
+      Ramaze::Log.info("Queue size is %s" % GQUEUE.size)
+      data = "%s|%s" % [ url, path(tile) ]
+      Ramaze::Log.info("Pushing #{data}")      
+      GQUEUE.push data
+    end
+
+    def spool2(tile, url)
       begin
         t = TCPSocket.new('localhost', 1234)
       rescue
@@ -39,8 +45,6 @@ module EarthMapper
       else
         t.print "%s|%s\n" % [ url, path(tile) ]
         t.close
-        # @database.execute("INSERT OR IGNORE INTO tiles VALUES (\"%s\", \"%s\", %s, %s, %s, %s, %s, %s, %s, 0 );" % 
-        # [tile.backend, tile.layer, tile.row, tile.col, tile.zoom, tile.north, tile.west, tile.south, tile.east ])
       end
     end
 

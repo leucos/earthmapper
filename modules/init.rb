@@ -9,5 +9,4 @@ EarthMapper.options.backends.each do |b|
   Ramaze.options.views.push(viewpath)
 end
 
-Ramaze::Log.info Ramaze.options.views.shift
 Ramaze::Log.info Ramaze.options.views.inspect

@@ -7,25 +7,21 @@ end
 
 begin
   require 'bundler'
-rescue
-  sh 'gem install bundler'
+rescue LoadError
+  print "Installing bundler..."
+  sh 'gem install bundler --no-ri --no-rdoc'
+  puts "done"
 ensure
-  sh 'bundle'
+  puts "Installing required gems..."
+  sh 'bundle --path vendor'
 end
 
 task :default => "server:start"
 
 namespace :server do
-  desc "Start everything."
-  multitask :start => [ 'server:web', 'server:grabber' ]
-
-  task :web do
-    #sh "bundle exec ruby bin/earthmapper.rb"
-    sh "bundle exec ramaze start -s thin"
-  end
-
-  task :grabber do
-    sh "bundle exec ruby bin/grabber.rb"
+  desc "Start server"
+  task :start do
+    sh "bundle exec ramaze start"
   end
 end
 
