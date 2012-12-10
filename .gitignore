@@ -1,4 +1,5 @@
 .bundle/
+config/*.rb
 pkg/
 vendor/
 earth_mapper.sublime-project
