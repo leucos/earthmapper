@@ -17,11 +17,6 @@ module France
       response['Content-Type'] = 'application/vnd.google-earth.kml+xml' 
     end
 
-    # provide(:kml, :engine => :etanni, :type => 'application/vnd.google-earth.kml+xml') do |action, value|
-    #   Ramaze::Log.info "In provide kml"
-    #   @content = value
-    # end
-
     def index
       # Returns mail KML with territories/layer list
       @title = 'France area'
@@ -34,7 +29,6 @@ module France
     def kml
       # Returns main KML with territories/layer list
       @title = 'France area'
-      @key = request.params["key"]
     end
 
     ## 
@@ -42,14 +36,23 @@ module France
     #
     def overlay
       @tileset = Array.new
-      @key = request.params["key"]
 
       # TODO: complain unless key
-      args = request.subset(:BBOX, :territory, :layer, :key)
+      args = request.subset(:BBOX, :territory, :layer)
 
       # We need to compute best zoom level here and return tile list
       # BBOX is WSEN
       w,s,e,n = args["BBOX"].split(/,/).map {|x| x.to_f }
+
+      # However, we want to restrict our search to the zone covered by the layer
+      t = France::Territory[args["territory"]]
+
+      Ramaze::Log.info("Requested NWSE bounds : %s %s %s %s" % [n,w,s,e] )
+      n = [n, t[:north]].min 
+      w = [w, t[:west]].max
+      s = [s, t[:south]].max
+      e = [e, t[:east]].min
+      Ramaze::Log.info("Restricted NWSE bounds for territory %s : %s %s %s %s" % [args["territory"], n,w,s,e] )
 
       # find best zoom level
       zoom = France::find_zoom(n,w,s,e)
@@ -63,7 +66,7 @@ module France
       # loop and add all tiles
       nw[0].upto(se[0]) do |r|
         nw[1].upto(se[1]) do |c|
-          @tileset << France::Tile.new(args['key'], args['layer'], r, c, zoom)
+          @tileset << France::Tile.new(France.options.key, args['layer'], r, c, zoom)
         end
       end
     end
