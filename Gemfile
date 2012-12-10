@@ -1,6 +1,6 @@
 source :rubygems
 
 gem 'ramaze'
-gem 'rgeo'
+gem 'foreman'
 gem 'thin'
 gem 'em-http-request'
