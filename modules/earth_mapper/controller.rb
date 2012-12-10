@@ -10,19 +10,20 @@ module EarthMapper
 
     map '/'
 
-    layout do |path|
-      if path === 'index'
-        :default
-      else
-        :kml
-      end
-    end
+#    layout do |path|
+#      if path === 'index'
+#        :default
+#      else
+#        :kml
+#      end
+#    end
+
+    layout :kml
 
     # the index action is called automatically when no other action is specified
     def index
       @backends = EarthMapper.options.backends
     end
-    alias :kml :index
 
   end
 end

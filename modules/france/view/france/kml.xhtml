@@ -1,16 +1,7 @@
 
-    <Folder>
-      <name>France</name>
-      <description>
-        <![CDATA[
-      <strong>Earthmapper | France</strong><br />
-      <a href="#{EarthMapper.options.myurl}/#{France::Controller.r(:index)}">Configuration</a>
-        ]]>
-      </description>
       
       <?r France::Territory.each_key do |t| ?>
         #{ render_partial :_territory_folder, :territory => t, :key => @key }
       <?r end ?>
-    </Folder>    
 
 
