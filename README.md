@@ -11,7 +11,7 @@ This software interfaces GoogleEarth with some geographic portals.
 - Uncompress earthmapper in a directory (or better : use git)
 - Execute `rake` (or double click `earthmapper.bat` under windows).
 
-At this point Its running but it does nothing until backends are configured.
+At this point its running but it does nothing until backends are configured.
 
 Note : It _should_ run under Ruby 1.8.7, but it would be slower.
 
@@ -19,7 +19,7 @@ Note : It _should_ run under Ruby 1.8.7, but it would be slower.
 
 #### Installation 
 
-- Ask an API on the [developper site at IGN][2]
+- Ask an API key on the [developper site at IGN][2]
 (sign-up, then create a contract with key type : Web)
 - Navigate "http://localhost:7000/france/index" and enter the key, click "Save"
 - Click on "Network Link" (upper right in navbar).
