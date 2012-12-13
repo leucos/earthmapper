@@ -11,8 +11,9 @@ This software interfaces GoogleEarth with some geographic portals.
 - Uncompress earthmapper in a directory (or better : use git)
 - Execute `rake` (or double click `earthmapper.bat` under windows).
 
-It should run under Ruby 1.8.7, but it would be slower.
-Its running but it does nothing until backends are configured.
+At this point Its running but it does nothing until backends are configured.
+
+Note : It _should_ run under Ruby 1.8.7, but it would be slower.
 
 ### Backend for France
 

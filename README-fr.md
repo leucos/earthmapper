@@ -4,9 +4,6 @@ EarthMapper
 [Home][3]
 
 Ce logiciel permet d'interfacer GoogleEarth aux portails cartographiques.
-En lui-même, earthmapper ne fait rien : il est nécessaire d'ajouter le module 
-correspondant au(x) portail(s) géographique(s) voulu(s) dans le répertoire 
-`modules/`
 
 ## Installation
 
@@ -14,10 +11,10 @@ correspondant au(x) portail(s) géographique(s) voulu(s) dans le répertoire
 - Décompressez l'archive dans un répertoire
 - Exécutez `rake` (ou lancer `earthmapper.bat` sous windows).
 
-Ca devrait marcher sous Ruby 1.8.7, mais bien plus lentement.
+A ce stade, c'est installé, mais ça ne fait rien tant que les backends 
+(portails disons) ne sont pas configurés.
 
-C'est installé, mais ça ne fait rien tant que les backends (portails disons) ne
-sont pas configurés.
+Note : Ca _devrait_ marcher sous Ruby 1.8.7, mais bien plus lentement.
 
 ### Portail France
 
