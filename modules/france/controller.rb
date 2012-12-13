@@ -66,7 +66,7 @@ module France
       # loop and add all tiles
       nw[0].upto(se[0]) do |r|
         nw[1].upto(se[1]) do |c|
-          @tileset << France::Tile.new(France.options.key, args['layer'], r, c, zoom)
+          @tileset << France::Tile.new(EarthMapper.options.france['key'], args['layer'], r, c, zoom)
         end
       end
     end

@@ -1,7 +1,0 @@
-module France
-  include Ramaze::Optioned
-
-  options.dsl do
-    o 'The key', :key, 'insert_your_key_here'
-  end
-end

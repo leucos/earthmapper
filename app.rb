@@ -8,20 +8,13 @@ require 'ramaze'
 # Make sure that Ramaze knows where you are
 Ramaze.options.roots = [__DIR__]
 
-# Get main setings
-require __DIR__('config/settings.rb')
-
-# Get backends settings
-EarthMapper.options.backends.each do |b|
-  Ramaze::Log.info("Loading settings for backend #{b[:name]} (#{b[:description]})")
-  require File.join(__DIR__('config'), b[:name])
-end
-
-
-# Initialize controllers and modules
-#require __DIR__('controller/init')
+# Load modules
 require __DIR__('modules/init')
 
-CACHE = EarthMapper::Cache.new
+EarthMapper.read_config(File.join(File.expand_path('~'),'.earthmapper', 'config.cfg'))
 
+# Create cache
+CACHE  = EarthMapper::Cache.new
+
+# Create queue to distribute work to grabbers pool
 GQUEUE = GrabPool.start(EarthMapper.options.grabbers)

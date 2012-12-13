@@ -2,8 +2,8 @@
       <open>1</open>
       <name>Data sources</name>
 
-      <?r @backends.each do |b| ?>
-        #{ render_partial :_provider_netlink, :provider => b }
+      <?r @backends.each_pair do |k,v| ?>
+        #{ render_partial :_provider_netlink, :name => k, :description => v[:description] }
       <?r end ?>
 
     </Folder>
