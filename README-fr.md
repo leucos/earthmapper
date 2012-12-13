@@ -6,15 +6,46 @@ En lui-même, earthmapper ne fait rien : il est nécessaire d'ajouter le module
 correspondant au(x) portail(s) géographique(s) voulu(s) dans le répertoire 
 `modules/`
 
-# Installation
+## Installation
 
-- Installez Ruby 1.9.3+ (pour Windows : http://rubyinstaller.org/)
+- Installez Ruby 1.9.3+[^1] (pour Windows, utilisez [RubyInstaller][1])
 - Décompressez l'archive dans un répertoire
-- Copiez les modules voulus dans le répertoire `modules/` et si nécessaire 
-  configurez le selon les instructions fournies dans sa documentation
-- Renommez le fichier `config/settings.rb.sample` en `config/settings.rb` et 
-  modifiez si nécessaire (en ajoutant les modules dans backend par exemple)
+- Demandez une clef d'API sur le [site développeur de l'IGN][2]
+(s'inscrire, puis créer un contrat, type de clef : Web)
 - Exécutez `rake` (ou lancer `earthmapper.bat` sous windows).
-- Ajoutez un lien réseau dans GoogleEarth, en utilisant 'http://localhost:7000'
-  comme adresse
 
+C'est installé, mais ça ne fait rien tant que les backends (portails disons) ne
+sont pas configurés.
+
+### Portail France
+
+#### Installation 
+- Naviguez sur "http://localhost:7000/france/index" et entrez la clef, puis 
+cliquer sur "Save"
+- Cliquez sur "Network Link" en haut à droite, dans la barre de navigation.
+- A ce stade, Google Earth devrait s'ouvrir. 
+
+#### Note
+
+Pour la partie france, le contrat IGN impose que vous vidiez le cache après
+chaque session.
+
+## Licence
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>
+
+    
+  [^1]: Marche aussi sur 1.8.7, mais plus lentement...
+  [1]: http://rubyinstaller.org/
+  [2]: http://api.ign.fr/moncompte/login
