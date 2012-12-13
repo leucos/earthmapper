@@ -5,18 +5,18 @@
 module France
 
   Territory = { 
-    # "ANF" => { :name => "Antilles Françaises",      :kx => 6160807.2519099, :ky => 6378137.0000000, :north => , :south =>, :west => , :east => },
-    # "ASP" => { :name => "Saint Paul Amsterdam",     :kx => 5026040.5439769, :ky => 6378137.0000000, :north => , :south =>, :west => , :east => },
-    # "CRZ" => { :name => "Ile Crozet",               :kx => 4430626.2549842, :ky => 6378137.0000000, :north => , :south =>, :west => , :east => },
+    "ANF" => { :name => "Antilles Françaises",      :kx => 6160807.2519099, :ky => 6378137.0000000, :north => 18.18, :south => 11.7, :west => -64, :east => -59},
+    "ASP" => { :name => "Saint Paul Amsterdam",     :kx => 5026040.5439769, :ky => 6378137.0000000, :north => -36, :south => -40, :west => 76, :east => 79},
+    "CRZ" => { :name => "Ile Crozet",               :kx => 4430626.2549842, :ky => 6378137.0000000, :north => -44, :south => -48, :west => 47, :east => 55},
     "FXX" => { :name => "France métropolitaine",    :kx => 4390419.7883516, :ky => 6378137.0000000, :north => 51.1443875274589686, :south => 40.867596209619862, :west => -6.2453997412196181, :east => 10.864590140082749 },
-    # "GUF" => { :name => "Guyane Française",         :kx => 6362600.1788320, :ky => 6378137.0000000, :north => , :south =>, :west => , :east => },
-    # "KER" => { :name => "Iles Kerguelen",           :kx => 4142268.6266325, :ky => 6378137.0000000, :north => , :south =>, :west => , :east => },
-    # "MYT" => { :name => "Mayotte",                  :kx => 6238759.4037015, :ky => 6378137.0000000, :north => , :south =>, :west => , :east => },
-    # "NCL" => { :name => "Nouvelle Calédonie",       :kx => 5913705.6486150, :ky => 6378137.0000000, :north => , :south =>, :west => , :east => },
-    # "PYF" => { :name => "Polynésie Française",      :kx => 6160807.2519099, :ky => 6378137.0000000, :north => , :south =>, :west => , :east => },
-    "REU" => { :name => "Réunion",                  :kx => 5954503.8607176, :ky => 6378137.0000000, :north => -20.85, :south => -21.40, :west => 55.20, :east => 55.90},
-    # "SPM" => { :name => "Saint Pierre et Miquelon", :kx => 4349878.9742539, :ky => 6378137.0000000, :north => , :south =>, :west => , :east => },
-    # "WLF" => { :name => "Wallis et Futuna",         :kx => 6188679.0727028, :ky => 6378137.0000000, :north => , :south =>, :west => , :east => },
+    "GUF" => { :name => "Guyane Française",         :kx => 6362600.1788320, :ky => 6378137.0000000, :north => 11.5, :south => -4.3, :west => -62.1, :east => -46},
+    "KER" => { :name => "Iles Kerguelen",           :kx => 4142268.6266325, :ky => 6378137.0000000, :north => -45, :south => -53, :west => 62, :east => 76},
+    "MYT" => { :name => "Mayotte",                  :kx => 6238759.4037015, :ky => 6378137.0000000, :north => 3, :south => -17.5, :west => 40, :east => 56},
+    "NCL" => { :name => "Nouvelle Calédonie",       :kx => 5913705.6486150, :ky => 6378137.0000000, :north => -17.1, :south => -24.3, :west => 160, :east => 170},
+    "PYF" => { :name => "Polynésie Française",      :kx => 6160807.2519099, :ky => 6378137.0000000, :north => 11, :south => -28.2, :west => -160, :east => -108 },
+    "REU" => { :name => "Réunion",                  :kx => 5954503.8607176, :ky => 6378137.0000000, :north => -20.782659, :south => -21.482416, :west => 55.167777, :east => 55.929337 },
+    "SPM" => { :name => "Saint Pierre et Miquelon", :kx => 4349878.9742539, :ky => 6378137.0000000, :north => 47.177344798969699, :south => 46.724584912620614, :west => -56.437241274288482, :east => -56.041481070053059},
+    "WLF" => { :name => "Wallis et Futuna",         :kx => 6188679.0727028, :ky => 6378137.0000000, :north => -12.8, :south => -14.6, :west => -178.5, :east => -175.8 },
   }
 
   Layers = { 
