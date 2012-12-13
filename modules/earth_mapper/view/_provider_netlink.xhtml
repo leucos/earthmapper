@@ -1,16 +1,3 @@
-      <NetworkLink>
-        <name>#{@provider[:name]}</name>
-        <description>
-          <![CDATA[
-<strong>#{@provider[:description]}</strong>
-]]>
-        </description>
-        <Link>
-          <href>#{EarthMapper.options.myurl}/#{@provider[:name]}/kml</href>
-          <viewRefreshMode>onRequest</viewRefreshMode>
-        </Link>
-      </NetworkLink>
-
-
+<li>#{@name} (<a href="#{EarthMapper.options.myurl}/#{@name}/index">#{@description}</a>)</li>
       
       

@@ -28,10 +28,10 @@ module France
         #   @raw = f.read
         # end
         # CACHE.store(self)
-        Ramaze::Log.info "+++ CACHE MISS"
+        Ramaze::Log.info "--- CACHE MISS ---"
         CACHE.spool(self, remote_url)
       else
-        Ramaze::Log.info "+++ CACHE HIT"
+        Ramaze::Log.info "+++ CACHE HIT +++"
         open(CACHE.path(self)) do |f|
           @raw = f.read
         end

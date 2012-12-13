@@ -16,6 +16,4 @@
 #
 #  $ chmod +x ./start.rb
 require File.expand_path('../app', __FILE__)
-puts Ramaze.options.views.inspect
-puts Ramaze.options.roots.inspect
-Ramaze.start(:adapter => :thin, :port => 7000, :file => __FILE__)
+Ramaze.start(:adapter => :webrick, :port => 7000, :file => __FILE__)

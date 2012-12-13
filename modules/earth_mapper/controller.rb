@@ -10,20 +10,26 @@ module EarthMapper
 
     map '/'
 
-#    layout do |path|
-#      if path === 'index'
-#        :default
-#      else
-#        :kml
-#      end
-#    end
+    layout do |path|
+      if path === 'index'
+        :default
+      else
+        :kml
+      end
+    end
 
-    layout :kml
+    before(:kml) do
+      response['Content-Type'] = 'application/vnd.google-earth.kml+xml'
+      response['Content-Disposition'] = 'attachment; filename="earthmapper.kml"'
+    end
 
     # the index action is called automatically when no other action is specified
     def index
       @backends = EarthMapper.options.backends
     end
 
+    def kml
+      @backends = EarthMapper.options.backends
+    end
   end
 end

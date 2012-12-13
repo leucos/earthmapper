@@ -79,3 +79,34 @@
         font-size:     13px;
         margin-bottom: 10px;
     }
+
+form#config ol li {
+  border-style: solid;
+  border-width: 2px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  line-height: 30px;
+  list-style: none;
+  padding: 5px 10px;
+  margin-bottom: 2px;
+}
+
+button {
+  background: #E33F1E;
+  border: none;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -khtml-border-radius: 20px;
+  border-radius: 20px;
+  color: #fff;
+  display: block;
+  margin: auto;
+  padding: 7px 25px;
+  text-transform: capitalize;
+}
+
+button:hover {
+  background: #D43919;
+  cursor: pointer;
+}

@@ -76,14 +76,6 @@ module France
     [lon, lat]
   end
 
-  def France.check(lat, lon, z)
-    res = Array.new
-    res = coords2tile(lat,lon,z)
-
-    puts "t2c(%s,%s,%s) => %s %s " % [lat, lon, z, *res]
-    puts "c2t(%s,%s,%s) => %s %s " % [res[0], res[1], z, *tile2coords(*res, z)]
-  end
-
   def France.find_zoom(north, west, south, east)
     sqrmaxtiles = France::MaxTiles
     pixpertile = 256

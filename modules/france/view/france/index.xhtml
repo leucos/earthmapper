@@ -1,1 +1,17 @@
-HTML version
+<div>
+  <form id="config">
+    <fieldset>
+      <ol>
+        <li>
+          <label for="key">Key</label>
+          <input id="key" name="key" type="text" value=#{@key}>
+        </li>
+        <li>
+          <label for="clear_cache">Empty cache on exit ?</label>
+          <input id="clear_cache" name="clear_cache" disabled="disabled" type="checkbox" #{@clear_cache == 'on' ? "checked" : ""}>
+        </li>
+      </ol>
+    </fieldset>
+    <button type="submit">Save</button>
+  </form>
+</div>
