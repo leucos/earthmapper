@@ -1,14 +1,18 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    innate (2012.03)
+    innate (2012.12)
       rack (~> 1.4.1)
+    net-http-persistent (2.8)
     rack (1.4.1)
-    ramaze (2012.04.14)
-      innate (>= 2012.03)
+    rake (10.0.3)
+    ramaze (2012.12.08)
+      innate (>= 2012.12)
+      rake
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  net-http-persistent
   ramaze
