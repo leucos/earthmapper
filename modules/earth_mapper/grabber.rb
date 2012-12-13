@@ -30,7 +30,7 @@ class GrabWorker
     raw = response.read_body
     print "*"
 
-    File.open(filename, 'w') do |f|
+    File.open(filename, 'wb') do |f|
       f.write(raw)
     end
 
