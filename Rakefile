@@ -21,7 +21,7 @@ task :default => "server:start"
 namespace :server do
   desc "Start server"
   task :start do
-    sh "bundle exec ramaze start"
+    sh "bundle exec ruby start.rb"
   end
 end
 
