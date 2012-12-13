@@ -1,4 +1,5 @@
 .bundle/
+.rbenv-version
 config/*.rb
 pkg/
 vendor/
