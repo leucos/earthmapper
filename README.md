@@ -1,15 +1,18 @@
 EarthMapper
 ===========
 
+[Home][3]
+
 This software interfaces GoogleEarth with some geographic portals.
 
 ## Installation
 
-- Instal Ruby 1.9.3+[^1] (for Windows, use [RubyInstaller][1])
+- Install Ruby 1.9.3+ (for Windows, use [RubyInstaller][1])
 - Uncompress earthmapper in a directory (or better : use git)
 - Execute `rake` (or double click `earthmapper.bat` under windows).
 
-Its running but it does nothin until backends are configured.
+It should run under Ruby 1.8.7, but it would be slower.
+Its running but it does nothing until backends are configured.
 
 ### Backend for France
 
@@ -42,6 +45,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
 
     
-  [^1]: Marche aussi sur 1.8.7, mais plus lentement...
   [1]: http://rubyinstaller.org/
   [2]: http://api.ign.fr/moncompte/login
+  [3]: https://github.com/leucos/earthmapper/
