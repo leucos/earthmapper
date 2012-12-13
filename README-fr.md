@@ -10,8 +10,6 @@ correspondant au(x) portail(s) géographique(s) voulu(s) dans le répertoire
 
 - Installez Ruby 1.9.3+[^1] (pour Windows, utilisez [RubyInstaller][1])
 - Décompressez l'archive dans un répertoire
-- Demandez une clef d'API sur le [site développeur de l'IGN][2]
-(s'inscrire, puis créer un contrat, type de clef : Web)
 - Exécutez `rake` (ou lancer `earthmapper.bat` sous windows).
 
 C'est installé, mais ça ne fait rien tant que les backends (portails disons) ne
@@ -19,7 +17,10 @@ sont pas configurés.
 
 ### Portail France
 
-#### Installation 
+#### Installation
+
+- Demandez une clef d'API sur le [site développeur de l'IGN][2]
+(s'inscrire, puis créer un contrat, type de clef : Web)
 - Naviguez sur "http://localhost:7000/france/index" et entrez la clef, puis 
 cliquer sur "Save"
 - Cliquez sur "Network Link" en haut à droite, dans la barre de navigation.
@@ -28,7 +29,8 @@ cliquer sur "Save"
 #### Note
 
 Pour la partie france, le contrat IGN impose que vous vidiez le cache après
-chaque session.
+chaque session. Le cache se situe dans ~/.earthmapper/cache/france/
+(~ étant votre répertoire personnel).
 
 ## Licence
 
