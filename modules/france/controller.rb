@@ -15,20 +15,33 @@ module France
 
     before(:kml, :overlay, :tile) do
       response['Content-Type'] = 'application/vnd.google-earth.kml+xml' 
+      response['Content-Disposition'] = 'attachment; filename="france.kml"'
     end
 
     def index
       # Returns mail KML with territories/layer list
-      @title = 'France area'
+      @title = 'France backend'
       # TODO: create a KML view
-      Ramaze::Log.info "In provide index"
+      #Ramaze::Log.info "In provide index"
 
-      #render_view(:indexkml)
+      EarthMapper.options.france ||= Hash.new
+
+      if request.params.count > 0
+        form = request.subset(:key, :clear_cache)
+        puts form.inspect
+        EarthMapper.options.france['key'] = form["key"]
+        EarthMapper.options.france['clear_cache'] = form["clear_cache"] || "off"
+      end
+      
+      EarthMapper.write_config
+
+      @key = EarthMapper.options.france['key']
+      @clear_cache = EarthMapper.options.france['clear_cache']
     end
 
     def kml
       # Returns main KML with territories/layer list
-      @title = 'France area'
+      @title = 'France backend'
     end
 
     ## 

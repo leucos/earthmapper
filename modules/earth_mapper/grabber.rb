@@ -1,5 +1,3 @@
-VERBOSE=true
-
 require 'net/http/persistent'
 
 class GrabWorker
@@ -17,7 +15,7 @@ class GrabWorker
 
     url,filename = data.split('|')
 
-    puts "> #{url}" if VERBOSE
+    Ramaze::Log.debug "Getting tile from #{url}"
 
     uri = URI url
     
@@ -28,13 +26,15 @@ class GrabWorker
     response = @http.request(uri, req)
 
     raw = response.read_body
-    print "*"
 
-    File.open(filename, 'wb') do |f|
-      f.write(raw)
+    if response.code == '200'
+      File.open(filename, 'wb') do |f|
+        f.write(raw)
+      end
+      Ramaze::Log.debug "Writing tile to #{filename}"
+    else
+      Ramaze::Log.error "Got status #{response.status} while retrieving tile"
     end
-
-    print "< #{filename}" if VERBOSE
   end
 end
 
@@ -42,15 +42,13 @@ end
 class GrabPool
   @@queue = nil
   def GrabPool.start(count)
-    print "Starting #{count} workers"
+    Ramaze::Log.info "Starting #{count} workers"
     @@queue = Queue.new
     count.times do
-      print "." 
       Thread.new do
         GrabWorker.new(@@queue).perform
       end 
     end
-    puts
     @@queue
   end
 end

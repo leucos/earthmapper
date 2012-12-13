@@ -19,6 +19,8 @@ module EarthMapper
     private
 
     def send_file(file)
+      respond!("Can't be fetched", 404) unless File.file?(file)
+
       body = open(file , "rb") { |io| io.read }
       puts "sending #{file}"
       respond!(body, 200, 'Content-Type' => 'image/jpeg')
