@@ -1,4 +1,5 @@
     <div>
+      <h2>Backends</h2>
       <name>#{@backends.count} backends found</name>
 
       <ul>
@@ -6,4 +7,38 @@
         #{ render_partial :_provider_netlink, :name => k, :description => v[:description] }
       <?r end ?>
       </ul>
+    </div>
+
+    <div>
+      <h2>Configuration</h2>
+      <form id="config" method="post">
+        <fieldset>
+          <ol>
+            <li>
+              <label for="myurl">MyURL</label>
+              <input id="myurl" size="40" name="myurl" type="text" value="#{EarthMapper.options.myurl}">
+            </li>
+            <li>
+              <label for="cache_dir">Cache directory</label>
+              <input id="cache_dir" size="40" name="cache_dir" type="text" value="#{EarthMapper.options.cache_dir}">
+            </li>
+            
+            <li>
+              <label for="user_agent">User agent</label>
+              <input id="user_agent" size="80" name="user_agent" type="text" value="#{EarthMapper.options.user_agent}">
+            </li>
+
+            <li>
+              <label for="referrer">Referrer</label>
+              <input id="referrer" size="40" name="referrer" type="text" value="#{EarthMapper.options.referrer}">
+            </li>
+
+            <li>
+              <label for="grabbers">Grabbing threads</label>
+              <input id="grabbers" size="40" name="grabbers" type="text" value="#{EarthMapper.options.grabbers}">
+            </li>
+          </ol>
+        </fieldset>
+        <button type="submit">Save</button>
+      </form>
     </div>

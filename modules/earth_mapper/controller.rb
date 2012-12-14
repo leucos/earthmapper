@@ -23,13 +23,27 @@ module EarthMapper
       response['Content-Disposition'] = 'attachment; filename="earthmapper.kml"'
     end
 
-    # the index action is called automatically when no other action is specified
     def index
+      @title = "EarthMapper"
       @backends = EarthMapper.options.backends
-    end
+
+      if request.params.count > 0
+        form = request.subset(:myurl, :cache_dir, :user_agent, :referrer, :grabbers)
+        puts form.inspect
+        [:myurl, :cache_dir, :user_agent, :referrer, :grabbers].each do |k|
+          EarthMapper.options.send("#{k.to_s}=", form[k.to_s])
+        end
+      end
+      
+      EarthMapper.write_config
+
+      @key = EarthMapper.options.france['key']
+      @clear_cache = EarthMapper.options.france['clear_cache']
+    end    
 
     def kml
       @backends = EarthMapper.options.backends
+      @title = "EarthMapper"
     end
   end
 end
