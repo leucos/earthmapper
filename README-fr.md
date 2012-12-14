@@ -22,8 +22,9 @@ Note : Ca _devrait_ marcher sous Ruby 1.8.7, mais bien plus lentement.
 
 - Demandez une clef d'API sur le [site développeur de l'IGN][2]
 (s'inscrire, puis créer un contrat, type de clef : Web)
-- Naviguez sur "http://localhost:7000/france/index" et entrez la clef, puis 
+- Naviguez sur [5][http://localhost:7000/france/index] et entrez la clef, puis 
 cliquer sur "Save"
+- Naviguez [4][http://localhost:7000/] and entrez le Referrer
 - Cliquez sur "Network Link" en haut à droite, dans la barre de navigation.
 - A ce stade, Google Earth devrait s'ouvrir. 
 
@@ -31,7 +32,8 @@ cliquer sur "Save"
 
 Pour la partie france, le contrat IGN impose que vous vidiez le cache après
 chaque session. Le cache se situe dans ~/.earthmapper/cache/france/
-(~ étant votre répertoire personnel).
+(~ étant votre répertoire personnel). Vous pouvez vérifier l'endroit dans les 
+paramètes accessibles sur [4][http://localhost:7000/]
 
 ## Licence
 
@@ -51,3 +53,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
   [1]: http://rubyinstaller.org/
   [2]: http://api.ign.fr/moncompte/login
   [3]: https://github.com/leucos/earthmapper/
+  [4]: http://localhost:7000/
+  [5]: http://localhost:7000/france/index

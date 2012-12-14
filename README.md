@@ -21,14 +21,17 @@ Note : It _should_ run under Ruby 1.8.7, but it would be slower.
 
 - Ask an API key on the [developper site at IGN][2]
 (sign-up, then create a contract with key type : Web)
-- Navigate "http://localhost:7000/france/index" and enter the key, click "Save"
+- Navigate [5][http://localhost:7000/france/index] and enter the key, click "Save"
+- Navigate [4][http://localhost:7000/] and enter the requierd Referrer
 - Click on "Network Link" (upper right in navbar).
 - GoogleEarth should open and you should have fun
 
 #### Note
 
-For the french portal, you are suposed to cleanr cache after every sessions.
-The cache is located in ~/.earthmapper/cache/france/
+For the french portal, you are suposed to clean the cache after every session.
+
+The cache is located in ~/.earthmapper/cache/france/ (or wherever you set it to 
+be in the [5][configuration page]), '~'' being your home directory.
 
 ## Licence
 
@@ -49,3 +52,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
   [1]: http://rubyinstaller.org/
   [2]: http://api.ign.fr/moncompte/login
   [3]: https://github.com/leucos/earthmapper/
+  [4]: http://localhost:7000/
+  [5]: http://localhost:7000/france/index
