@@ -1,10 +1,12 @@
 <div>
-  <form id="config">
+  <form id="config" method="post">
     <fieldset>
       <ol>
         <li>
           <label for="key">Key</label>
-          <input id="key" name="key" type="text" value=#{@key}>
+          <input id="key" name="key" size=40 type="text" value=#{@key}>
+          <a href="http://api.ign.fr/jsp/site/Portal.jsp?page=myapi&action=createkey">Get a developper key</a>
+          <a href="http://professionnels.ign.fr/api-web">Get a pro key</a>
         </li>
         <li>
           <label for="clear_cache">Empty cache on exit ?</label>
