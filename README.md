@@ -13,7 +13,7 @@ This software interfaces GoogleEarth with some geographic portals.
 
 At this point its running but it does nothing until backends are configured.
 
-Note : It _should_ run under Ruby 1.8.7, but it would be slower.
+Note : It runs under Ruby 1.8.7, but it's significantly slower.
 
 ### Backend for France
 

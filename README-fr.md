@@ -11,10 +11,10 @@ Ce logiciel permet d'interfacer GoogleEarth aux portails cartographiques.
 - Décompressez l'archive dans un répertoire
 - Exécutez `rake` (ou lancer `earthmapper.bat` sous windows).
 
-A ce stade, c'est installé, mais ça ne fait rien tant que les backends 
-(portails disons) ne sont pas configurés.
+A ce stade, c'est installé, mais ça ne fait rien tant qu'aucun portail n'est 
+configuré.
 
-Note : Ca _devrait_ marcher sous Ruby 1.8.7, mais bien plus lentement.
+Note : EarthMapper _devrait_ marcher sous Ruby 1.8.7, mais bien plus lentement.
 
 ### Portail France
 
@@ -22,18 +22,19 @@ Note : Ca _devrait_ marcher sous Ruby 1.8.7, mais bien plus lentement.
 
 - Demandez une clef d'API sur le [site développeur de l'IGN][2]
 (s'inscrire, puis créer un contrat, type de clef : Web)
-- Naviguez sur [5][http://localhost:7000/france/index] et entrez la clef, puis 
+- Naviguez sur [http://localhost:7000/france/index][5] et entrez la clef, puis 
 cliquer sur "Save"
-- Naviguez [4][http://localhost:7000/] and entrez le Referrer
+- Naviguez [http://localhost:7000/][4] and entrez le Referrer
 - Cliquez sur "Network Link" en haut à droite, dans la barre de navigation.
-- A ce stade, Google Earth devrait s'ouvrir. 
+- Normalement, Google Earth devrait s'ouvrir; dans le cas contraire, 
+enregistrez le fichier KML produit et ouvrez le dans GoogleEarth.
 
 #### Note
 
 Pour la partie france, le contrat IGN impose que vous vidiez le cache après
 chaque session. Le cache se situe dans ~/.earthmapper/cache/france/
 (~ étant votre répertoire personnel). Vous pouvez vérifier l'endroit dans les 
-paramètes accessibles sur [4][http://localhost:7000/]
+paramètes accessibles sur la [page de configuration][4].
 
 ## Licence
 
