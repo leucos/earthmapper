@@ -110,3 +110,9 @@ button:hover {
   background: #D43919;
   cursor: pointer;
 }
+
+label {
+  display: block;
+  width: 150px;
+  float: left;
+}
