@@ -36,9 +36,6 @@ module EarthMapper
       end
       
       EarthMapper.write_config
-
-      @key = EarthMapper.options.france['key']
-      @clear_cache = EarthMapper.options.france['clear_cache']
     end    
 
     def kml
