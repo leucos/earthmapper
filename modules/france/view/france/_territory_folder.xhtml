@@ -1,11 +1,12 @@
     <Folder>
       <open>0</open>
+      <visibility>0</visibility>
       <name>#{France::Territory[@territory][:name]}</name>
-      <Style>
+      <!-- <Style>
         <ListStyle>
           <listItemType>radioFolder</listItemType>
         </ListStyle>
-      </Style>
+      </Style> -->
 
       <?r France::Layers.each_key do |l| ?>
         <?r Ramaze::Log.info "_terr : %s" % l ?>
