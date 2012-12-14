@@ -42,6 +42,8 @@ end
 class GrabPool
   @@queue = nil
   def GrabPool.start(count)
+    # Ensure count is an int
+    count = count.to_i
     Ramaze::Log.info "Starting #{count} workers"
     @@queue = Queue.new
     count.times do
