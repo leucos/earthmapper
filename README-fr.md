@@ -8,11 +8,11 @@ Ce logiciel permet d'interfacer GoogleEarth aux portails cartographiques.
 ## Installation
 
 - Installez Ruby 1.9.3+ (pour Windows, utilisez [RubyInstaller][1])
-- Décompressez l'archive dans un répertoire
-- Exécutez `rake` (ou lancer `earthmapper.bat` sous windows).
+- Téléchargez [l'archive][6] et décompressez la dans un répertoire
+- Exécutez `rake` (ou ouvrez le répertoire dans l'explorateur de fichiers et
+lancer `earthmapper` sous windows).
 
-A ce stade, c'est installé, mais ça ne fait rien tant qu'aucun portail n'est 
-configuré.
+A ce stade, c'est installé, mais il reste à configurer les portails.
 
 Note : EarthMapper _devrait_ marcher sous Ruby 1.8.7, mais bien plus lentement.
 
@@ -56,3 +56,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
   [3]: https://github.com/leucos/earthmapper/
   [4]: http://localhost:7000/
   [5]: http://localhost:7000/france/index
+  [6]: https://github.com/leucos/earthmapper/archive/master.zip
