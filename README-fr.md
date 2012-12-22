@@ -5,6 +5,12 @@ EarthMapper
 
 Ce logiciel permet d'interfacer GoogleEarth aux portails cartographiques.
 
+## Choisir une version
+
+La branche standalone/pure est destinée aux non-developpers. Ses performances 
+sont plutôt faibles et cette branche n'est plus vraiment maintenue, mais cette 
+version est facile à installer avec les instruction ci-dessous.
+
 ## Installation
 
 - Installez Ruby 1.9.3+ (pour Windows, utilisez [RubyInstaller][1])

@@ -5,6 +5,12 @@ EarthMapper
 
 This software interfaces GoogleEarth with some geographic portals.
 
+## Choosing a version
+
+The standalone/pure branch is targetted to non-developpers. Performance is
+pretty low and this branch is manily unmaintained, but it should be easy to 
+install with the instructions below
+
 ## Installation
 
 - Install Ruby 1.9.3+ (for Windows, use [RubyInstaller][1])
