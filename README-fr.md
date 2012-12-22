@@ -9,8 +9,8 @@ Ce logiciel permet d'interfacer GoogleEarth aux portails cartographiques.
 
 - Installez Ruby 1.9.3+ (pour Windows, utilisez [RubyInstaller][1])
 - Téléchargez [l'archive][6] et décompressez la dans un répertoire
-- Exécutez `rake` (ou ouvrez le répertoire dans l'explorateur de fichiers et
-lancer `earthmapper` sous windows).
+- Exécutez `rake` (si vous êtes sous windows, vous pouvez ouvrir le répertoire
+ dans l'explorateur de fichiers et cliquer sur `earthmapper`).
 
 A ce stade, c'est installé, mais il reste à configurer les portails.
 
