@@ -1,6 +1,7 @@
 .bundle/
 .rbenv-version
 config/*.rb
+log/
 pkg/
 vendor/
 earth_mapper.sublime-project
