@@ -1,33 +1,28 @@
+require 'rake'
+require 'rake/clean'
+require 'date'
+require 'time'
 
-# module EarthMapper
-#   Gemspec = Gem::Specification::load(
-#     File.expand_path('../earth_mapper.gemspec', __FILE__)
-#   )
-# end
+RAMAZE_ROOT = File.expand_path(File.dirname(__FILE__))
 
+CLEAN.include %w[
+  **/.*.sw?
+  *.gem
+  .config
+  **/*~
+  **/{vttroute-*.db,cache.yaml}
+  *.yaml
+  pkg
+  rdoc
+  public/doc
+  *coverage*
+]
+
+Dir.glob(File.expand_path('../task/*.rake', __FILE__)).each do |f|
+  import(f)
+end
 
 task :default => "server:start"
-
-namespace :server do
-  begin
-    require 'bundler'
-  rescue LoadError
-    print "Installing bundler..."
-    sh 'gem install bundler --no-ri --no-rdoc'
-    puts "done"
-  ensure
-    puts "Installing required gems..."
-    sh 'bundle --path vendor'
-  end
-  desc "Start server"
-  task :start do
-    sh "bundle exec ruby start.rb"
-  end
-  desc "Console"
-  task :console do
-    sh "bundle exec irb -r ./app.rb" 
-  end
-end
 
 namespace :build do
   desc 'Builds a new Gem'
