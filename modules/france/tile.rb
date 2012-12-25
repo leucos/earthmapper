@@ -65,7 +65,7 @@ module France
     end
 
     def url
-      CACHE.fetch_url(self)
+      CACHE.path(self)
     end
 
     private 

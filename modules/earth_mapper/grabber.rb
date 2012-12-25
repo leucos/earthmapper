@@ -1,9 +1,11 @@
 require 'net/http/persistent'
+require 'json'
+require 'redis'
 
 class GrabWorker
-  def initialize(queue)
-    @queue = queue
+  def initialize
     @http = Net::HTTP::Persistent.new "grabber_#{Thread.current}"
+    @redis = Redis.new
   end
 
   def perform
@@ -11,15 +13,18 @@ class GrabWorker
   end
 
   def grab
-    data = @queue.pop
+    Ramaze::Log.debug "Waiting for request"    
+    data = @redis.blpop('earthmapper.queue', :timeout => 0)[1]
+    Ramaze::Log.debug "Got request: %s" % data  
+    data = JSON.parse(data)
 
-    url,filename = data.split('|')
+    Ramaze::Log.debug "Here"    
 
-    Ramaze::Log.debug "Getting tile from #{url}"
+    Ramaze::Log.debug "Getting tile from #{data['url']}"
 
-    uri = URI url
+    uri = URI data['url']
     
-    req = Net::HTTP::Get.new(url)
+    req = Net::HTTP::Get.new(data['url'])
     req.add_field('User-Agent', EarthMapper.options.user_agent)
     req.add_field('Referer', EarthMapper.options.referrer)
 
@@ -27,31 +32,30 @@ class GrabWorker
 
     raw = response.read_body
 
+    # key = "earthmapper.%s.%s.%s.%s.%s" % [ backend, layer, zoom, row, col ]
+
+    Ramaze::Log.debug "Response : %s " % response.code
+
     if response.code == '200'
-      File.open(filename, 'wb') do |f|
-        f.write(raw)
-      end
-      Ramaze::Log.debug "Writing tile to #{filename}"
+      @redis.lpush(data['key'], raw)
+      Ramaze::Log.debug "Wrote tile key #{data['key']}"
     else
-      Ramaze::Log.error "Got status #{response.status} while retrieving tile"
+      Ramaze::Log.error "Got status #{response.code} while retrieving tile"
     end
   end
 end
 
 
 class GrabPool
-  @@queue = nil
   def GrabPool.start(count)
     # Ensure count is an int
     count = count.to_i
     Ramaze::Log.info "Starting #{count} workers"
-    @@queue = Queue.new
     count.times do
       Thread.new do
-        GrabWorker.new(@@queue).perform
+        GrabWorker.new.perform
       end 
     end
-    @@queue
   end
 end
 

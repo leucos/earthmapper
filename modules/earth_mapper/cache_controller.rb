@@ -1,30 +1,22 @@
 # coding: utf-8
 
+require 'redis'
+
 module EarthMapper
   class CacheController < Ramaze::Controller
     def index(backend, layer, zoom, row, col)
-      path = File.join(EarthMapper.options.cache_dir, backend, layer, zoom, row)
-      file = File.join(path, col)
+      redis = Redis.new
 
-      # Ugly hack...
-      # Suse elect ?
-      100.times do |l|
-        break if File.file?(file)
-        sleep 0.1
+      data  = nil
+      key   = "earthmapper.%s.%s.%s.%s.%s" % [ backend, layer, zoom, row, col ]
+
+      data = redis.blpop(key, :timeout => 5)
+
+      if data
+        respond!(data[1], 200, 'Content-Type' => 'image/jpeg')
+      else
+        respond!("Can't be fetched", 404)
       end
-
-      send_file(file)
     end
-
-    private
-
-    def send_file(file)
-      respond!("Can't be fetched", 404) unless File.file?(file)
-
-      body = open(file , "rb") { |io| io.read }
-      puts "sending #{file}"
-      respond!(body, 200, 'Content-Type' => 'image/jpeg')
-    end
-
   end
 end
