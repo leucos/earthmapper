@@ -1,8 +1,12 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    celluloid (0.12.4)
+      facter (>= 1.6.12)
+      timers (>= 1.0.0)
     daemons (1.1.9)
     eventmachine (1.0.0)
+    facter (1.6.16)
     innate (2012.12)
       rack (~> 1.4.1)
     net-http-persistent (2.8)
@@ -17,11 +21,13 @@ GEM
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
+    timers (1.0.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  celluloid
   net-http-persistent
   ramaze
   redis

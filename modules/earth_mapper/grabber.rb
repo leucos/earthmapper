@@ -1,14 +1,18 @@
 require 'net/http/persistent'
 require 'json'
 require 'redis'
+require 'celluloid'
 
-class GrabWorker
+class Grabber
+  include Celluloid
+
   def initialize
     @http = Net::HTTP::Persistent.new "grabber_#{Thread.current}"
     @redis = Redis.new
   end
 
   def perform
+    Ramaze::Log.debug "Perform called"    
     grab while true
   end
 
