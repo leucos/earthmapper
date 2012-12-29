@@ -25,6 +25,10 @@ module EarthMapper
 
     def index
       @title = "EarthMapper"
+
+      # Locked for now
+      respond!('not available', 403)
+
       @backends = EarthMapper.options.backends
 
       if request.params.count > 0

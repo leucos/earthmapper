@@ -1,13 +1,13 @@
-#require 'sqlite3'
 require 'redis'
 
 module EarthMapper
 
   class Cache
     @@redis = Redis.new
-    def spool(tile, url)
+    def spool(tile, data)
       Ramaze::Log.info("Queue size is %s" % @@redis.llen("earthmapper.queue"))
-      data = { 'url' => url, 'key' => key(tile) }
+      data['key'] = key(tile)
+
       Ramaze::Log.info("Pushing #{data}")      
       @@redis.rpush('earthmapper.queue', data.to_json)
     end

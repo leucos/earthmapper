@@ -1,6 +1,3 @@
-#require 'rgeo'
-#require 'open-uri'
-
 module France
   class Tile < EarthMapper::Tile
 
@@ -20,16 +17,10 @@ module France
       # check if cached
       case CACHE.cached?(self)
       when false
-        # if not retrieve
-        # puts "fetching #{remote_url}"
-        # open(remote_url,
-        #   "User-Agent" => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.14 Safari/537.17',
-        #   "Referer"=> 'localhost') do |f|
-        #   @raw = f.read
-        # end
-        # CACHE.store(self)
         Ramaze::Log.info "--- CACHE MISS ---"
-        CACHE.spool(self, remote_url)
+        CACHE.spool(self, { 'url' => remote_url, 
+                            'referer' => EarthMapper.options.france['referer'], 
+                            'user_agent' => EarthMapper.options.france['user_agent'] })
       else
         Ramaze::Log.info "+++ CACHE HIT +++"
         open(CACHE.path(self)) do |f|

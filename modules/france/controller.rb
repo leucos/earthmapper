@@ -21,8 +21,9 @@ module France
     def index
       # Returns mail KML with territories/layer list
       @title = 'France backend'
-      # TODO: create a KML view
-      #Ramaze::Log.info "In provide index"
+
+      # Locked for now
+      respond!('not available', 403)
 
       EarthMapper.options.france ||= Hash.new
 
