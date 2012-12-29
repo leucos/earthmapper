@@ -1,66 +1,54 @@
-require 'net/http/persistent'
 require 'json'
 require 'redis'
-require 'celluloid'
+require 'eventmachine'
+require 'em-http'
+require 'em-redis'
 
 class Grabber
-  include Celluloid
-
   def initialize
-    @http = Net::HTTP::Persistent.new "grabber_#{Thread.current}"
     @redis = Redis.new
+    EventMachine.next_tick {    
+      Ramaze::Log.info "Grabber ready"
+      @redis_em = EM::Protocols::Redis.connect
+      @redis_em.blpop('earthmapper.queue', 0) { |data| _grab(data[1]) }
+    }
   end
 
-  def perform
-    Ramaze::Log.debug "Perform called"    
-    grab while true
-  end
+  private 
 
-  def grab
-    Ramaze::Log.debug "Waiting for request"    
-    data = @redis.blpop('earthmapper.queue', :timeout => 0)[1]
-    Ramaze::Log.debug "Got request: %s" % data  
+  def _grab(data)
     data = JSON.parse(data)
+    @redis.incr("earthmapper.requests")
 
-    Ramaze::Log.debug "Here"    
+    http = EventMachine::HttpRequest.new(data['url']).get(:head => {
+      'User-Agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.14 Safari/537.17',
+      'Referer' => 'http://127.0.0.1'
+    })
 
-    Ramaze::Log.debug "Getting tile from #{data['url']}"
+    #http = EM::HttpRequest.new(data['url']).get
 
-    uri = URI data['url']
-    
-    req = Net::HTTP::Get.new(data['url'])
-    req.add_field('User-Agent', EarthMapper.options.user_agent)
-    req.add_field('Referer', EarthMapper.options.referrer)
+    http.callback {
+      if http.response_header.status == 200
+        @redis.lpush(data['key'], http.response)
+        count = @redis.get('earthmapper.requests')
+        puts "#{count} Wrote #{http.response.length} bytes for tile key #{data['key']}"
+      else
+        puts "Got status #{http.response_header.status} while retrieving tile #{data['url']}"
+      end
+      @redis.decr("earthmapper.requests")
+    }
 
-    response = @http.request(uri, req)
+    http.errback {
+      puts "Error getting tile #{data['url']} : %s" % http.inspect
+      @redis.decr("earthmapper.requests")
+    }
 
-    raw = response.read_body
-
-    # key = "earthmapper.%s.%s.%s.%s.%s" % [ backend, layer, zoom, row, col ]
-
-    Ramaze::Log.debug "Response : %s " % response.code
-
-    if response.code == '200'
-      @redis.lpush(data['key'], raw)
-      Ramaze::Log.debug "Wrote tile key #{data['key']}"
-    else
-      Ramaze::Log.error "Got status #{response.code} while retrieving tile"
+    while @redis.get("earthmapper.requests").to_i > 48
+      sleep 0.1
     end
+
+    @redis_em.blpop('earthmapper.queue', 0) { |d| _grab(d[1]) }
   end
+
+
 end
-
-
-class GrabPool
-  def GrabPool.start(count)
-    # Ensure count is an int
-    count = count.to_i
-    Ramaze::Log.info "Starting #{count} workers"
-    count.times do
-      Thread.new do
-        GrabWorker.new.perform
-      end 
-    end
-  end
-end
-
-

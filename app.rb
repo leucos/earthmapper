@@ -18,18 +18,6 @@ EarthMapper.read_config
 CACHE  = EarthMapper::Cache.new
 
 # Create queue to distribute work to grabbers pool
-Ramaze::Log.info("About to create pool")
-pool = Grabber.pool(:size => 20) #(size: EarthMapper.options.grabbers)
-Ramaze::Log.info("Pool created")
-Thread.new do
-  puts  "In new thread"
-  r = Redis.new
-  while r.llen('earthmapper.queue') do
-    pool.perform
-  end
-end
-
-Ramaze::Log.info("Pool started")
-
+#Grabber.new
 
 EarthMapper.write_config
