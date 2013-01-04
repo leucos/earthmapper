@@ -2,9 +2,10 @@
     <Folder>
       <open>1</open>
       <name>Data sources</name>
-      <visibility>0</visibility>
+      <visibility>1</visibility>
       <?r @backends.each_pair do |k,v| ?>
         #{ render_partial :_provider_netlink_kml, :name => k, :description => v[:description] }
       <?r end ?>
 
     </Folder>
+

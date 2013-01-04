@@ -18,7 +18,8 @@ module EarthMapper
       end
     end
 
-    before(:kml) do
+#    before(:kml) do
+    before_all do
       response['Content-Type'] = 'application/vnd.google-earth.kml+xml'
       response['Content-Disposition'] = 'attachment; filename="earthmapper.kml"'
     end
