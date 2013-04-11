@@ -1,3 +1,5 @@
+require 'uri'
+
 module France
   class Tile < EarthMapper::Tile
 
@@ -64,8 +66,8 @@ module France
     private 
 
     def remote_url
-      host = EarthMapper.options.myurl.split(':')[0]
-      "#{host}:9889/#{self.key}/geoportail/wmts?LAYER=#{self.layer}&EXCEPTIONS=text/xml&FORMAT=image/jpeg&SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX=#{self.zoom}&TILEROW=#{self.row}&TILECOL=#{self.col}"
+      uri = URI("EarthMapper.options.myurl")
+      "http://#{uri.host}:9889/#{self.key}/geoportail/wmts?LAYER=#{self.layer}&EXCEPTIONS=text/xml&FORMAT=image/jpeg&SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX=#{self.zoom}&TILEROW=#{self.row}&TILECOL=#{self.col}"
     end
   end
 end
