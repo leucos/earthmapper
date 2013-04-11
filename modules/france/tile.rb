@@ -13,20 +13,21 @@ module France
       @northwest = @southeast = nil
 
       @raw = nil
-
+      
+      Ramaze::Log.info @url
       # check if cached
-      case CACHE.cached?(self)
-      when false
-        Ramaze::Log.info "--- CACHE MISS ---"
-        CACHE.spool(self, { 'url' => remote_url, 
-                            'referer' => EarthMapper.options.france['referer'], 
-                            'user_agent' => EarthMapper.options.france['user_agent'] })
-      else
-        Ramaze::Log.info "+++ CACHE HIT +++"
-        open(CACHE.path(self)) do |f|
-          @raw = f.read
-        end
-      end
+      #case CACHE.cached?(self)
+      #when false
+      #  Ramaze::Log.info "--- CACHE MISS ---"
+      #  CACHE.spool(self, { 'url' => remote_url, 
+      #                      'referer' => EarthMapper.options.france['referer'], 
+      #                      'user_agent' => EarthMapper.options.france['user_agent'] })
+      #else
+      #  Ramaze::Log.info "+++ CACHE HIT +++"
+      #  open(CACHE.path(self)) do |f|
+      #    @raw = f.read
+      #  end
+      #end
     end
 
     def north
@@ -56,13 +57,15 @@ module France
     end
 
     def url
-      CACHE.path(self)
+      # CACHE.path(self)
+      remote_url.gsub('&','&amp;')
     end
 
     private 
 
     def remote_url
-      "http://gpp3-wxs.ign.fr/#{self.key}/geoportail/wmts?LAYER=#{self.layer}&EXCEPTIONS=text/xml&FORMAT=image/jpeg&SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX=#{self.zoom}&TILEROW=#{self.row}&TILECOL=#{self.col}"
+      host = EarthMapper.options.myurl.split(':')[0]
+      "#{host}:9889/#{self.key}/geoportail/wmts?LAYER=#{self.layer}&EXCEPTIONS=text/xml&FORMAT=image/jpeg&SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX=#{self.zoom}&TILEROW=#{self.row}&TILECOL=#{self.col}"
     end
   end
 end
