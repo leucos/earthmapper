@@ -1,52 +1,50 @@
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
-    addressable (2.3.2)
+    addressable (2.3.6)
+    cookiejar (0.3.2)
     daemons (1.1.9)
-    em-http-request (0.3.0)
-      addressable (>= 2.0.0)
-      escape_utils
-      eventmachine (>= 0.12.9)
-    em-proxy (0.1.8)
-      eventmachine
+    dotenv (0.11.1)
+      dotenv-deployment (~> 0.0.2)
+    dotenv-deployment (0.0.2)
+    em-http-request (1.1.2)
+      addressable (>= 2.3.4)
+      cookiejar
+      em-socksify (>= 0.3)
+      eventmachine (>= 1.0.3)
+      http_parser.rb (>= 0.6.0)
     em-redis (0.3.0)
       eventmachine
-    escape_utils (0.2.4)
-    eventmachine (1.0.0)
-    foreman (0.60.2)
-      thor (>= 0.13.6)
-    http_parser.rb (0.5.3)
-    innate (2012.12)
-      rack (~> 1.4.1)
-    macaddr (1.6.1)
-      systemu (~> 2.5.0)
-    rack (1.4.1)
-    rake (10.0.3)
+    em-socksify (0.3.0)
+      eventmachine (>= 1.0.0.beta.4)
+    eventmachine (1.0.3)
+    foreman (0.74.0)
+      dotenv (~> 0.11.1)
+      thor (~> 0.19.1)
+    http_parser.rb (0.6.0)
+    innate (2013.02.21)
+      rack (~> 1.5.2)
+    rack (1.5.2)
+    rake (10.3.2)
     ramaze (2012.12.08)
       innate (>= 2012.12)
       rake
-    redis (3.0.2)
+    redis (3.1.0)
     rgeo (0.3.20)
-    systemu (2.5.2)
-    thin (1.5.0)
+    thin (1.6.2)
       daemons (>= 1.0.9)
-      eventmachine (>= 0.12.6)
+      eventmachine (>= 1.0.0)
       rack (>= 1.0.0)
-    thor (0.16.0)
-    uuid (2.3.7)
-      macaddr (~> 1.0)
+    thor (0.19.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   em-http-request
-  em-proxy
   em-redis
   foreman
-  http_parser.rb
   ramaze
   redis
   rgeo
   thin
-  uuid
