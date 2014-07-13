@@ -1,0 +1,8 @@
+dependencies:
+  - { role: nginx }
+  - { role: ruby,
+      version: "{{ earthmapper.ruby_version }}",
+      ruby_default: "{{ earthmapper.ruby_version }}" }
+
+
+

@@ -1,0 +1,17 @@
+---
+:myurl: {{ earthmapper.url }}
+:cache_dir: {{ earthmapper.cache_dir }}
+:user_agent: {{ earthmapper.user_agent }}
+:referrer: localhost
+:grabbers: 8
+:backends:
+{% for b in earthmapper.backends %}
+  {{ b }}:
+    :description: {{earthmapper.backends[b].description}}
+{% endfor %}
+{% for b in earthmapper.backends %}
+:{{b}}:
+  key: {{earthmapper.backends[b].key}}
+  useragent: {{earthmapper.backends[b].user_agent}}
+  referrer: {{earthmapper.backends[b].referer}}
+{% endfor %}

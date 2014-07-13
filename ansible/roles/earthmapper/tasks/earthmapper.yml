@@ -1,0 +1,116 @@
+- debug: var=earthmapper
+  tags: test
+
+- name: Creates deploy user
+  user: name={{ earthmapper.deploy_user }} comment="Earthmapper user"
+
+- name: Creates deploy directory
+  file:
+    path=~{{ earthmapper.deploy_user }}/earthmapper/
+    owner={{ earthmapper.deploy_user }}
+    state=directory owner={{ earthmapper.deploy_user }}
+
+- name: Installs necessary prereqs
+  apt: pkg={{ item }} state=latest
+  with_items: earthmapper.packages|default([])
+
+- name: Deploys application
+  sudo: true
+  sudo_user: "{{ earthmapper.deploy_user }}"
+  git:
+    repo={{ earthmapper.repos }}
+    dest=~{{ earthmapper.deploy_user }}/earthmapper/
+    version={{ earthmapper.version|default('master') }}
+    accept_hostkey=true
+  notify: Restart nginx
+
+- name: Gets current tag
+  shell: cd ~{{ earthmapper.deploy_user }}/earthmapper/ && git describe --always --tag
+  changed_when: false
+  register: git_tag
+
+- debug: var=git_tag.stdout
+
+- name: Check if a bundle is required
+  sudo_user: "{{ earthmapper.deploy_user }}"
+  sudo: true
+  shell: cd ~{{ earthmapper.deploy_user }}/earthmapper/; bash -lc 'bundle check --no-color || true'
+  changed_when: bundle_required.stdout != "The Gemfile's dependencies are satisfied"
+  register: bundle_required
+
+- name: Bundles application
+  sudo_user: "{{ earthmapper.deploy_user }}"
+  sudo: true
+  shell: cd ~{{ earthmapper.deploy_user }}/earthmapper/; bash -lc 'bundle --no-color'
+  when: bundle_required|changed
+  notify: Restart earthmapper
+
+- name: Adds application config (1/2)
+  template: src="../templates/{{ item }}.j2"
+    dest="~{{ earthmapper.deploy_user }}/earthmapper/config/{{ item }}"
+    owner={{ earthmapper.deploy_user }}
+    group={{ earthmapper.deploy_user }}
+    mode=640
+  register: new_config
+  with_items:
+    - thin.yaml
+  notify: Restart earthmapper
+
+- name: Adds application config (2/2)
+  template: src="../templates/config.cfg.j2"
+    dest="~{{ earthmapper.deploy_user }}/.earthmapper/config.cfg"
+    owner={{ earthmapper.deploy_user }}
+    group={{ earthmapper.deploy_user }}
+    mode=640
+  register: new_config
+  notify: Restart earthmapper
+
+- name: Deploys nginx config
+  template:
+    src="../templates/{{item}}.conf.j2"
+    dest=/etc/nginx/sites-available/{{item}}.conf
+  notify: Restart nginx
+  with_items:
+    - earthmapper
+    - earthmapper-france
+  tags:
+    - nginx
+
+- name: Symlinks config
+  file:
+    src=/etc/nginx/sites-available/{{item}}.conf
+    dest=/etc/nginx/sites-enabled/{{item}}.conf state=link
+  with_items:
+    - earthmapper
+    - earthmapper-france
+  notify: Restart nginx
+  tags:
+    - nginx
+
+- name: Creates PID and log dirs
+  file: dest={{ item }}/earthmapper/
+    owner={{ earthmapper.deploy_user }}
+    group={{ earthmapper.deploy_user }}
+    mode=750
+    state=directory
+  with_items:
+    - "{{earthmapper.log_dir}}"
+  notify: Restart nginx
+
+- name: Binstubs thin
+  sudo_user: "{{ earthmapper.deploy_user }}"
+  sudo: true
+  shell: cd ~{{ earthmapper.deploy_user }}/earthmapper/; bash -lc "bundle binstubs thin"
+  register: thin_has_been_binstubbed
+  changed_when: '"Skipped thin since it already exists" in thin_has_been_binstubbed'
+  notify: Restart nginx
+
+- name: Deploys init script
+  template: src="../templates/earthmapper.init.j2" dest=/etc/init.d/earthmapper mode=0770
+  notify: Restart nginx
+
+- name: Registers init script
+  #shell: update-rc.d earthmapper defaults
+  service: name=earthmapper enabled=yes
+  notify: Restart nginx
+

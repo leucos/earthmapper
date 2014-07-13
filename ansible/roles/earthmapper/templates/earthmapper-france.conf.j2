@@ -1,0 +1,29 @@
+# Nginx conf for earthmapper france tiles
+#
+# {{ ansible_managed }}
+#
+server {
+  listen 9889;
+  server_name {{ inventory_hostname }};
+
+  # Make site accessible from http://localhost/
+  server_name _;
+
+  rewrite_log off;
+  error_log /var/log/nginx/error.log;
+
+  # Then try to find corresponding file (assets)
+  # If no file is found, head to the action @rewriter
+  location / {
+    proxy_pass http://160.92.169.129:80;
+    proxy_set_header Referer "{{earthmapper.backends.france.referer}}";
+    proxy_set_header User-Agent "{{earthmapper.backends.france.user_agent}}";
+  }
+
+  # deny access to .htaccess files, if Apache's document root
+  # concurs with nginx's one
+  #
+  location ~ /\.ht {
+    deny all;
+  }
+}

@@ -1,0 +1,23 @@
+- debug: var=nginx
+
+- name: Adds nginx ppa
+  action: apt_repository repo=ppa:nginx/stable
+
+- name: Adds PPA key
+  apt_key: url=http://keyserver.ubuntu.com:11371/pks/lookup?op=get&search=0x00A6F0A3C300EE8C state=present
+
+- name: Installs nginx
+  action: apt pkg=nginx-full state=latest
+  register: just_installed
+
+- name: Writes nginx.conf
+  action: template src="../templates/nginx.j2" dest=/etc/nginx/nginx.conf
+  notify:
+  - Restart nginx
+
+- name: Replaces nginx default server conf for php5-fpm
+  action: template src="../templates/default-fpm.j2" dest=/etc/nginx/sites-available/default
+  when: "'php5-fpm' in nginx.mode and nginx.add_default and just_installed|changed"
+  notify:
+  - Restart nginx
+

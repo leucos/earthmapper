@@ -1,0 +1,50 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          earthmapper
+# Required-Start:    $local_fs $remote_fs
+# Required-Stop:     $local_fs $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      S 0 1 6
+# Short-Description: Earthmapper initscript
+# Description:       Earthmapper
+### END INIT INFO
+
+# Do NOT "set -e"
+
+APP=earthmapper
+APP_PATH=~{{ earthmapper.deploy_user }}/${APP}
+DAEMON="${APP_PATH}/bin/thin"
+
+SCRIPT_NAME=/etc/init.d/earthmapper
+
+ARGS="--daemonize --chdir $APP_PATH -C${APP_PATH}/config/thin.yaml"
+
+# Creates PID dir (this dir is in tmps, so it needs to be created at every boot)
+
+if [ ! -e {{earthmapper.pid_dir}} ]; then
+  mkdir -p {{earthmapper.pid_dir}}
+  chown {{ earthmapper.deploy_user }} {{earthmapper.pid_dir}}
+fi
+
+. /lib/init/vars.sh
+
+# Exit if the package is not installed
+[ -x "$DAEMON" ] || exit 0
+
+case "$1" in
+  start)
+	su - {{ earthmapper.deploy_user }} -c "$DAEMON start $ARGS"
+	;;
+  stop)
+	su - {{ earthmapper.deploy_user }} -c "$DAEMON stop $ARGS --"
+	;;
+  restart)
+	su - {{ earthmapper.deploy_user }} -c "$DAEMON restart $ARGS"
+	;;
+  *)
+	echo "Usage: $SCRIPT_NAME {start|stop|restart}" >&2
+	exit 3
+	;;
+esac
+
+:

@@ -1,0 +1,17 @@
+nginx:
+  mode: 'direct'
+  add_default: false
+
+earthmapper:
+  url: "http://your.url/"
+  deploy_user: 'earthmapper'
+  cache_dir: "/home/earthmapper/.earthmapper/cache"
+  user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.14 Safari/537.17"
+  referrer: "localhost"
+  grabbers: 8
+  backends:
+    france:
+      description: "France"
+      key: "put.your.key.here"
+      user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.14 Safari/537.17"
+      referer: "http://put.your.configured.referer.here/"

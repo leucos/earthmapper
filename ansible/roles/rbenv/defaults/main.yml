@@ -1,0 +1,2 @@
+rbenv:
+  makeopts: "-j2"

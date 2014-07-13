@@ -1,0 +1,27 @@
+# Nginx conf for earthmapper
+#
+# {{ ansible_managed }}
+#
+server {
+  listen 80;
+  server_name {{ inventory_hostname }};
+
+  # Make site accessible from http://localhost/
+  server_name _;
+
+  rewrite_log off;
+  error_log /var/log/nginx/error.log;
+
+  # Then try to find corresponding file (assets)
+  # If no file is found, head to the action @rewriter
+  location / {
+    proxy_pass http://127.0.0.1:{{ earthmapper.port }};
+  }
+
+  # deny access to .htaccess files, if Apache's document root
+  # concurs with nginx's one
+  #
+  location ~ /\.ht {
+    deny all;
+  }
+}

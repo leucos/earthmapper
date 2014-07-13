@@ -1,0 +1,18 @@
+earthmapper:
+  url: 'http://{{ inventory_hostname }}/'
+  cache_dir: '/tmp'
+  pid_dir: '/var/run/earthmapper/'
+  log_dir: '/var/log/earthmapper/'
+  deploy_user: 'user'
+  repos: 'https://github.com/leucos/earthmapper.git'
+  port: 8001
+  version: 'master'
+  ruby_version: '2.1.2'
+  packages:
+    - git
+
+ruby:
+  default: "{{ earthmapper.ruby_version }}"
+  deploy_user: "{{ earthmapper.deploy_user }}"
+  versions:
+    - "{{ earthmapper.ruby_version }}"

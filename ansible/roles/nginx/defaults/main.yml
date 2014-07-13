@@ -1,0 +1,3 @@
+nginx:
+  root: /var/lib/nginx/
+  worker_connections: 1024

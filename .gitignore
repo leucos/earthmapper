@@ -1,5 +1,7 @@
 .bundle/
 .rbenv-version
+ansible/hosts
+ansible/group_vars/all
 config/*.rb
 log/
 pkg/

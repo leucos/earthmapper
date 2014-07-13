@@ -1,0 +1,6 @@
+- name: Restart earthmapper
+  service: name=earthmapper state=restarted
+
+- name: Check earthmapper
+  wait_for: port={{earthmapper.port}} delay=5 timeout=10
+
